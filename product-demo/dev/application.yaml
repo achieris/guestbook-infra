@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/achieris/product-demo-gitops.git
     targetRevision: main
-    path: "overlays/dev"
+    path: "/overlays/dev/"
   destination:
     server: https://kubernetes.default.svc
     namespace: nginx 
