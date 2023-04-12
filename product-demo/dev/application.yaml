@@ -5,16 +5,13 @@ metadata:
   namespace: openshift-gitops
 spec:
   project: default
-  sources:
-  - repoURL: https://achieris.github.io/product-demo-gitops 
+  source:
+    repoURL: https://github.com/achieris/product-demo-gitops.git
     targetRevision: "0.1.0" 
     chart: nginx-chart
     helm:
       valueFiles:
-      - $values/values-dev.yaml
-  - repoURL: 'https://github.com/achieris/product-demo-gitops.git'
-    targetRevision: main
-    ref: values
+      - values-dev.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: nginx 
