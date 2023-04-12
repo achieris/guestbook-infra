@@ -7,8 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/achieris/product-demo-gitops.git 
-    chart: nginx-chart
-    targetRevision: 1.16.0
+    targetRevision: main
     helm:
       valueFiles:
       - values-dev.yaml
