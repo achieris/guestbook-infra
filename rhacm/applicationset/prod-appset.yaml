@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prod-applications
+  namespace: openshift-gitops
+spec:
+  generators:        
+    - matrix:
+        generators:
+          - clusterDecisionResource:
+              configMapRef: acm-placement
+              labelSelector:
+                matchLabels:
+                  cluster.open-cluster-management.io/placement: prod-placement
+              requeueAfterSeconds: 180
+          - git:
+              repoURL: https://github.com/achieris/infra-demo-gitops.git
+              revision: HEAD
+              directories:
+                - path: "*/prod"
+  template:
+    metadata:
+      labels:
+        velero.io/exclude-from-backup: "true"
+      name: '{{path[0]}}-{{name}}'
+    spec:
+      destination:
+        namespace: openshift-gitops
+        server: '{{server}}'
+      project: default
+      source:
+        path: '{{path}}'
+        repoURL: https://github.com/achieris/infra-demo-gitops.git
+        targetRevision: main
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+        - PruneLast=true
