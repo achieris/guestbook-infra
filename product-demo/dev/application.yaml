@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/achieris/product-demo-gitops 
+    repoURL: https://achieris.github.io/product-demo-gitops 
     targetRevision: "0.1.0" 
     helm:
       valueFiles:
