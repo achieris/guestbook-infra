@@ -4,25 +4,32 @@ metadata:
   name: dev-applications
   namespace: openshift-gitops
 spec:
-  generators:
-  - clusterDecisionResource:
-      configMapRef: acm-placement
-      labelSelector:
-        matchLabels:
-          cluster.open-cluster-management.io/placement: dev-placement
-      requeueAfterSeconds: 180
+  generators:        
+    - matrix:
+        generators:
+          - clusterDecisionResource:
+              configMapRef: acm-placement
+              labelSelector:
+                matchLabels:
+                  cluster.open-cluster-management.io/placement: dev-placement
+              requeueAfterSeconds: 180
+          - git:
+              repoURL: https://github.com/achieris/infra-demo-gitops.git
+              revision: HEAD
+              directories:
+                - path: "*/dev"
   template:
     metadata:
       labels:
         velero.io/exclude-from-backup: "true"
-      name: {{path[0]}}-{{name}}
+      name: '{{path[0]}}-{{name}}'
     spec:
       destination:
         namespace: openshift-gitops
         server: '{{server}}'
       project: default
       source:
-        path: */dev
+        path: '{{path}}'
         repoURL: https://github.com/achieris/infra-demo-gitops.git
         targetRevision: main
       syncPolicy:
