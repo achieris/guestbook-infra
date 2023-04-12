@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://achieris.github.io/product-demo-gitops.git 
+    repoURL: https://achieris.github.io/product-demo-gitops 
     targetRevision: "0.1.0" 
-    chart: helm-chart
+    chart: nginx-chart
     helm:
       valueFiles:
       - values-dev.yaml
