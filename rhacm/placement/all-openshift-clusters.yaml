@@ -1,15 +1,8 @@
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"cluster.open-cluster-management.io/v1beta1","kind":"Placement","metadata":{"annotations":{},"name":"all-openshift-clusters","namespace":"openshift-gitops"},"spec":{"predicates":[{"requiredClusterSelector":{"labelSelector":{"matchExpressions":[{"key":"vendor","operator":"In","values":["OpenShift"]}]}}}]}}
-  creationTimestamp: "2023-04-12T10:20:40Z"
-  generation: 1
   name: all-openshift-clusters
   namespace: openshift-gitops
-  resourceVersion: "504007"
-  uid: a45f1957-9e22-49ea-b386-92c9d9f15839
 spec:
   predicates:
   - requiredClusterSelector:
@@ -19,16 +12,3 @@ spec:
           operator: In
           values:
           - OpenShift
-status:
-  conditions:
-  - lastTransitionTime: "2023-04-12T10:20:40Z"
-    message: Placement configurations check pass
-    reason: Succeedconfigured
-    status: "False"
-    type: PlacementMisconfigured
-  - lastTransitionTime: "2023-04-12T10:20:40Z"
-    message: All cluster decisions scheduled
-    reason: AllDecisionsScheduled
-    status: "True"
-    type: PlacementSatisfied
-  numberOfSelectedClusters: 2

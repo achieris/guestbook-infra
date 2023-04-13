@@ -1,35 +1,28 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: dev-applications
+  name: guestbook-dev
   namespace: openshift-gitops
 spec:
-  generators:        
-    - matrix:
-        generators:
-          - clusterDecisionResource:
-              configMapRef: acm-placement
-              labelSelector:
-                matchLabels:
-                  cluster.open-cluster-management.io/placement: dev-placement
-              requeueAfterSeconds: 180
-          - git:
-              repoURL: https://github.com/achieris/infra-demo-gitops.git
-              revision: HEAD
-              directories:
-                - path: "*/dev"
+  generators:
+    - clusterDecisionResource:
+        configMapRef: acm-placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: dev-placement
+        requeueAfterSeconds: 180
   template:
     metadata:
       labels:
         velero.io/exclude-from-backup: "true"
-      name: '{{path[0]}}-{{name}}'
+      name: 'guestbook-{{name}}'
     spec:
       destination:
         namespace: openshift-gitops
         server: '{{server}}'
       project: default
       source:
-        path: '{{path}}'
+        path: dev
         repoURL: https://github.com/achieris/infra-demo-gitops.git
         targetRevision: main
       syncPolicy:
