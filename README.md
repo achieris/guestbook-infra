@@ -20,7 +20,7 @@ The *rhacm* folder contains the applicationset used to generate on the cluster h
     ├── prod-appset.yaml
     └── prod-placement.yaml
 ```
-## rhacm/<env>-appset.yaml and rhacm/<env>/placement.yaml manifests
+## rhacm/<cluster_env>-appset.yaml and rhacm/<cluster_env>/placement.yaml manifests
 
 The applicationset create automatically applications using the generators. 
 In the following case we use the Cluster Decision Resource Generator. 
@@ -29,7 +29,7 @@ In the following case we use the Cluster Decision Resource Generator.
 ```
 kind: ApplicationSet
 metadata:
-  name: guestbook-<env>
+  name: guestbook-<cluster_env>
   namespace: openshift-gitops
 spec:
   generators:
@@ -37,7 +37,7 @@ spec:
         configMapRef: acm-placement
         labelSelector:
           matchLabels:
-            cluster.open-cluster-management.io/placement: <env>-placement
+            cluster.open-cluster-management.io/placement: <cluster_env>-placement
         requeueAfterSeconds: 180
   template:
     metadata:
@@ -50,7 +50,7 @@ spec:
         server: '{{server}}'
       project: default
       source:
-        path: <env>
+        path: <cluster_env>
         repoURL: https://github.com/achieris/guestbook-infra.git
         targetRevision: main
       syncPolicy:
@@ -67,7 +67,7 @@ This is the placement used in the applicationset generator.
 ```
 kind: Placement
 metadata:
-  name: <env>-placement
+  name: <cluster_env>-placement
   namespace: openshift-gitops
 spec:
   predicates:
@@ -77,11 +77,11 @@ spec:
         - key: cluster_env
           operator: In
           values:
-          - <env> 
+          - <cluster_env> 
 
 ```
-## <env>/application.yaml manifests
-This is the application resource deployed on the <env> remote clusters.
+## <cluster_env>/application.yaml manifests
+This is the application resource deployed on the <cluster_env> remote clusters.
 The syncPolicy is not automated as requested by the customer.
 
 ```
@@ -95,7 +95,7 @@ spec:
   source:
     repoURL: https://github.com/achieris/product-demo-gitops.git
     targetRevision: main
-    path: <env>
+    path: <cluster_env>
   destination:
     server: https://kubernetes.default.svc
     namespace: guestbook 
