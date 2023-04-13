@@ -6,12 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/achieris/product-demo-gitops.git
+    repoURL: https://github.com/achieris/guestbook.git
     targetRevision: main
     path: dev
   destination:
     server: https://kubernetes.default.svc
     namespace: guestbook 
   syncPolicy:
-    syncOptions:     # Sync options which modifies sync behavior
-    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.  
+    syncOptions:     
+    - CreateNamespace=true 
