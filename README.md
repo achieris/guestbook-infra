@@ -93,7 +93,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/achieris/product-demo-gitops.git
+    repoURL: https://github.com/achieris/guestbook.git
     targetRevision: main
     path: <cluster_env>
   destination:
