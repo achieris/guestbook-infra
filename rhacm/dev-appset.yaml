@@ -23,7 +23,7 @@ spec:
       project: default
       source:
         path: dev
-        repoURL: https://github.com/achieris/infra-demo-gitops.git
+        repoURL: https://github.com/achieris/guestbook-infra.git
         targetRevision: main
       syncPolicy:
         automated:
